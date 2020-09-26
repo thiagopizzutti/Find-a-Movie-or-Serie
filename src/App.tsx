@@ -1,13 +1,16 @@
 import React from 'react';
-import Home from './components/pages/Home';
+import { DataContextProvider } from './hooks/useData';
+import Home from './pages/Home';
 import GlobalStyle from './styles/global';
 
 function App() {
   return (
-    <div className="App">
+
+    <DataContextProvider>
       <Home />
       <GlobalStyle />
-    </div>
+    </DataContextProvider>
+
   );
 }
 
