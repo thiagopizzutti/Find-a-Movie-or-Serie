@@ -13,7 +13,7 @@ import { Input, Button, SelectableButton } from '..';
 import { useData } from '../../hooks/useData';
 
 const Search: React.FC = () => {
-  const { isLoading, handleMoviesOrSeries } = useData();
+  const { moviesOrSeries, handleMoviesOrSeries } = useData();
 
   const {
     handleChange,
@@ -57,7 +57,7 @@ const Search: React.FC = () => {
         </SelectableButton>
       </ButtonContent>
       <SearchContent>
-        {isLoading ? (
+        {moviesOrSeries.loading ? (
           <StyledLoader>
             <BounceLoader size={60} color="#45aaf2" />
           </StyledLoader>

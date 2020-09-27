@@ -10,7 +10,7 @@ interface RouteParams {
 }
 
 const Details: React.FC = () => {
-  const { selectedItem, handleSelectedItem, isLoading, error } = useData();
+  const { selectedItem, handleSelectedItem } = useData();
 
   const { id } = useParams() as RouteParams;
 
@@ -18,29 +18,29 @@ const Details: React.FC = () => {
     handleSelectedItem(id);
   }, [handleSelectedItem, id]);
 
-  if (isLoading) {
+  if (selectedItem.loading) {
     return <BounceLoader size={60} color="#45aaf2" />;
   }
   return (
     <Container>
-      {error ? (
-        <p>{error}</p>
+      {selectedItem.error ? (
+        <p>{selectedItem.error}</p>
       ) : (
         <>
-          <h1>{selectedItem.Title}</h1>
-          <img src={selectedItem.Poster} alt="" />
+          <h1>{selectedItem.data.Title}</h1>
+          <img src={selectedItem.data.Poster} alt="" />
           <p>
             <strong>Ano: </strong>
-            {selectedItem.Year}
+            {selectedItem.data.Year}
           </p>
           <p>
             <strong>Diretor(a): </strong>
-            {selectedItem.Director}
+            {selectedItem.data.Director}
           </p>
           <p>
             <strong>Atrizes/Atores: </strong>
 
-            {selectedItem.Actors}
+            {selectedItem.data.Actors}
           </p>
         </>
       )}

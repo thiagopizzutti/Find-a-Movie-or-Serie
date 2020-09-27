@@ -1,53 +1,58 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { api } from '../services/api';
 
+const INITIAL_MOVIES_OR_SERIES_STATE = {
+  data: {
+    items: [] as IMoviesOrSeries[],
+    totalResults: '',
+  },
+  loading: false,
+  error: '',
+};
+const INITIAL_SELECTED_ITEM_STATE = {
+  data: {} as IMoviesOrSeries,
+  loading: true,
+  error: '',
+};
 interface IDataContext {
   handleMoviesOrSeries: (formPayload: IFormPayload) => Promise<void>;
-  isLoading: boolean;
-  moviesOrSeries: Array<IMovie | ISerie>;
-  selectedItem: IMovie | ISerie;
+  moviesOrSeries: typeof INITIAL_MOVIES_OR_SERIES_STATE;
+  selectedItem: typeof INITIAL_SELECTED_ITEM_STATE;
   handleSelectedItem: (id: string) => Promise<void>;
-  error: string;
 }
 interface IFormPayload {
   title: string;
   type: string;
 }
-interface IMovie {
-  Poster: string;
-  Title: string;
-  Type: string;
-  Year: string;
-  Director: string;
-  Actors: string;
-  imdbID: string;
-}
-interface ISerie {
+interface IMoviesOrSeries {
   Poster: string;
   Title: string;
   Type: string;
   Year: string;
   Actors: string;
   Director: string;
-  Genre: string;
   imdbID: string;
 }
 
 const DataContext = createContext({} as IDataContext);
 
 const DataContextProvider: React.FC = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [moviesOrSeries, setMoviesOrSeries] = useState<Array<ISerie | IMovie>>(
-    [],
+  const [moviesOrSeries, setMoviesOrSeries] = useState(
+    INITIAL_MOVIES_OR_SERIES_STATE,
   );
-  const [selectedItem, setSelectedItem] = useState<IMovie | ISerie>(
-    {} as ISerie | IMovie,
-  );
-  const [error, setError] = useState('');
+  const [selectedItem, setSelectedItem] = useState(INITIAL_SELECTED_ITEM_STATE);
 
   const handleMoviesOrSeries = useCallback(async ({ title, type }) => {
-    setIsLoading(true);
-    setError('');
+    setMoviesOrSeries(prevState => ({
+      ...prevState,
+      error: '',
+      loading: true,
+      data: {
+        items: [],
+        totalResults: '',
+      },
+    }));
+
     try {
       const response = await api.get('', {
         params: {
@@ -57,21 +62,40 @@ const DataContextProvider: React.FC = ({ children }) => {
       });
 
       if (response.data.Error) {
-        setError('Nenhum item encontrado');
+        setMoviesOrSeries(prevState => ({
+          ...prevState,
+          error: 'Nenhum item encontrado',
+        }));
+
         return;
       }
-
-      setMoviesOrSeries(response.data.Search);
+      setMoviesOrSeries(prevState => ({
+        ...prevState,
+        data: {
+          totalResults: response.data.totalResults,
+          items: response.data.Search,
+        },
+      }));
     } catch (error) {
-      setError('Falha para obter os dados solicitados');
+      setMoviesOrSeries(prevState => ({
+        ...prevState,
+        error: 'Falha para obter os dados solicitados',
+      }));
     } finally {
-      setIsLoading(false);
+      setMoviesOrSeries(prevState => ({
+        ...prevState,
+        loading: false,
+      }));
     }
   }, []);
 
   const handleSelectedItem = useCallback(async (id: string) => {
-    setIsLoading(true);
-    setError('');
+    setSelectedItem(prevState => ({
+      ...prevState,
+      error: '',
+      loading: true,
+    }));
+
     try {
       const response = await api.get('/', {
         params: {
@@ -79,15 +103,27 @@ const DataContextProvider: React.FC = ({ children }) => {
         },
       });
       if (response.data.Error) {
-        setError('Nenhum item encontrado');
+        setSelectedItem(prevState => ({
+          ...prevState,
+          error: 'Nenhum item encontrado',
+        }));
         return;
       }
 
-      setSelectedItem(response.data);
+      setSelectedItem(prevState => ({
+        ...prevState,
+        data: response.data,
+      }));
     } catch (error) {
-      setError('Falha ao obter os dados solicitados');
+      setSelectedItem(prevState => ({
+        ...prevState,
+        error: 'Falha para obter os dados solicitados',
+      }));
     } finally {
-      setIsLoading(false);
+      setSelectedItem(prevState => ({
+        ...prevState,
+        loading: false,
+      }));
     }
   }, []);
 
@@ -95,11 +131,9 @@ const DataContextProvider: React.FC = ({ children }) => {
     <DataContext.Provider
       value={{
         handleMoviesOrSeries,
-        isLoading,
         moviesOrSeries,
         selectedItem,
         handleSelectedItem,
-        error,
       }}
     >
       {children}
