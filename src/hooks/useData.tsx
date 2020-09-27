@@ -1,74 +1,115 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import { api } from '../services/api';
 
 interface IDataContext {
   handleMoviesOrSeries: (formPayload: IFormPayload) => Promise<void>;
   isLoading: boolean;
   moviesOrSeries: Array<IMovie | ISerie>;
+  selectedItem: IMovie | ISerie;
+  handleSelectedItem: (id: string) => Promise<void>;
+  error: string;
+}
+interface IFormPayload {
+  title: string;
+  type: string;
+}
+interface IMovie {
+  Poster: string;
+  Title: string;
+  Type: string;
+  Year: string;
+  Director: string;
+  Actors: string;
+  imdbID: string;
+}
+interface ISerie {
+  Poster: string;
+  Title: string;
+  Type: string;
+  Year: string;
+  Actors: string;
+  Director: string;
+  Genre: string;
+  imdbID: string;
 }
 
-interface IFormPayload{
-    title: string;
-    type: string
-}
+const DataContext = createContext({} as IDataContext);
 
-interface IMovie{
-  poster: string
-  title:string
-  type:string
-  year:string
-  imdbid:string
-}
-interface ISerie{
-  poster:string
-  title:string
-  type:string
-  year:string
-  actors:string
-  director:string
-  genre:string
-  imdbid:string
-}
-
-const DataContext = createContext({} as IDataContext)
-
-
-const DataContextProvider: React.FC = ({children}) => {
+const DataContextProvider: React.FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [moviesOrSeries, setMoviesOrSeries] = useState<Array<ISerie | IMovie>>([]);
+  const [moviesOrSeries, setMoviesOrSeries] = useState<Array<ISerie | IMovie>>(
+    [],
+  );
+  const [selectedItem, setSelectedItem] = useState<IMovie | ISerie>(
+    {} as ISerie | IMovie,
+  );
+  const [error, setError] = useState('');
 
-  const handleMoviesOrSeries = async ({ title, type }) => {
+  const handleMoviesOrSeries = useCallback(async ({ title, type }) => {
     setIsLoading(true);
+    setError('');
+    try {
+      const response = await api.get('', {
+        params: {
+          s: title,
+          type,
+        },
+      });
 
-    const response = await api.get('', {
-      params: {
-        s: title,
-        type,
-      },
-    });
+      if (response.data.Error) {
+        setError('Nenhum item encontrado');
+        return;
+      }
 
-    setTimeout(() => {
+      setMoviesOrSeries(response.data.Search);
+    } catch (error) {
+      setError('Falha para obter os dados solicitados');
+    } finally {
       setIsLoading(false);
-      setMoviesOrSeries(response.data);
-      console.log(response.data);
-    }, 1500);
-  };
+    }
+  }, []);
+
+  const handleSelectedItem = useCallback(async (id: string) => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const response = await api.get('/', {
+        params: {
+          i: id,
+        },
+      });
+      if (response.data.Error) {
+        setError('Nenhum item encontrado');
+        return;
+      }
+
+      setSelectedItem(response.data);
+    } catch (error) {
+      setError('Falha ao obter os dados solicitados');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <DataContext.Provider
       value={{
         handleMoviesOrSeries,
         isLoading,
-        moviesOrSeries
-      }}>
+        moviesOrSeries,
+        selectedItem,
+        handleSelectedItem,
+        error,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
 };
 
-const useData = () => {
-  const context = useContext(DataContext)
-  return context
-}
+const useData = (): IDataContext => {
+  const context = useContext(DataContext);
+  return context;
+};
 
 export { useData, DataContextProvider };

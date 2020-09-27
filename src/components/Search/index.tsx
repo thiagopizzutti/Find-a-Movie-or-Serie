@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import BounceLoader from 'react-spinners/BounceLoader';
 import * as yup from 'yup';
@@ -9,17 +9,11 @@ import {
   StyledError,
 } from './styles';
 import Form from '../Form';
-import { Input, Button, SelectableButton } from '../';
+import { Input, Button, SelectableButton } from '..';
 import { useData } from '../../hooks/useData';
 
 const Search: React.FC = () => {
-
-  const {
-    isLoading,
-    handleMoviesOrSeries,
-  } = useData()
-
-
+  const { isLoading, handleMoviesOrSeries } = useData();
 
   const {
     handleChange,
@@ -34,15 +28,15 @@ const Search: React.FC = () => {
       type: '',
       title: '',
     },
-    onSubmit:handleMoviesOrSeries,
-      validationSchema: yup.object().shape({
+    onSubmit: handleMoviesOrSeries,
+    validationSchema: yup.object().shape({
       title: yup.string().required('Preencha com o nome do filme ou série'),
     }),
   });
 
   const handleType = (type: string) => {
-    setFieldValue('type', type)
-  }
+    setFieldValue('type', type);
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -69,6 +63,7 @@ const Search: React.FC = () => {
           </StyledLoader>
         ) : (
           <Input
+            placeholder="termo de busca: (ex: Silicon Valley)"
             onChange={handleChange}
             onBlur={handleBlur}
             name="title"

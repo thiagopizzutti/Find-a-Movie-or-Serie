@@ -8,10 +8,11 @@ export const Container = styled.header`
 
   label {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: -10px;
     font-size: 2rem;
-    color: #939393;
+    color: #45aaf2;
   }
+
   input {
     width: 100%;
     font-size: 1.7rem;

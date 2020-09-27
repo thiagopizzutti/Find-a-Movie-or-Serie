@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-
   html{
     font-size: 10px;
   }
@@ -19,7 +18,7 @@ export default createGlobalStyle`
     color: #2A2A2A;
     width: 100vw;
     max-width: 100%;
-    /* min-height: 100vh; */
+    min-height: 100vh;
     font-family: 'Work Sans', sans-serif;
     background-color: #ECF0F3;
   }
@@ -46,13 +45,15 @@ export default createGlobalStyle`
     padding: 0;
     display: table;
   }
+
   fieldset {
     border: 0;
     padding: 0.01em 0 0 0;
     margin: 0;
     min-width: 0;
   }
+
   body:not(:-moz-handler-blocked) fieldset {
     display: table-cell;
   }
-  `;
+`;

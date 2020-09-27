@@ -2,8 +2,7 @@ import React, { FormHTMLAttributes } from 'react';
 
 import { FormContainer, Content } from './styles';
 
-interface IProps extends FormHTMLAttributes<HTMLFormElement>{}
-
+type IProps = FormHTMLAttributes<HTMLFormElement>;
 
 const Form: React.FC<IProps> = ({ children, ...rest }) => (
   <FormContainer {...rest}>

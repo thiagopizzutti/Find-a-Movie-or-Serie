@@ -4,13 +4,15 @@ import { Container } from './styles';
 
 interface IProps {
   title: string;
-  year: string
+  year: string;
+  poster: string;
 }
 
-const Card: React.FC<IProps> = ({title, year}) => {
+const Card: React.FC<IProps> = ({ title, year, poster }) => {
   return (
     <Container>
-      <h1>{title}</h1>
+      <img src={poster} alt="Poster" />
+      <h3>{title}</h3>
       <p>{year}</p>
     </Container>
   );

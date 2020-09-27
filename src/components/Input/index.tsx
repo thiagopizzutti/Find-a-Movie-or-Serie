@@ -1,18 +1,18 @@
-import React, { InputHTMLAttributes } from 'react'
-import { Container } from './styles'
+import React, { InputHTMLAttributes } from 'react';
+import { Container } from './styles';
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement>{
-  name: string,
-  label: string
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  label: string;
 }
 
-const Input:React.FC<IProps> = ({name, label,...rest}) => {
+const Input: React.FC<IProps> = ({ name, label, ...rest }) => {
   return (
     <Container>
       <label htmlFor={name}>{label}</label>
-      <input id={name} {...rest}/>
+      <input id={name} {...rest} />
     </Container>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

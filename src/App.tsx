@@ -1,17 +1,18 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { DataContextProvider } from './hooks/useData';
-import Home from './pages/Home';
+import Routes from './Routes';
 import GlobalStyle from './styles/global';
 
-function App() {
+const App: React.FC = () => {
   return (
-
-    <DataContextProvider>
-      <Home />
-      <GlobalStyle />
-    </DataContextProvider>
-
+    <BrowserRouter>
+      <DataContextProvider>
+        <Routes />
+        <GlobalStyle />
+      </DataContextProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

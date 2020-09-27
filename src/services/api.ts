@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const api = axios.create({
   baseURL: `https://www.omdbapi.com/`,
@@ -6,5 +6,3 @@ export const api = axios.create({
     apikey: process.env.REACT_APP_API_KEY,
   },
 });
-
-
