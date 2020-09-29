@@ -4,7 +4,13 @@ import { useData } from '../../hooks/useData';
 import Button from '../Button';
 import Card from '../Card';
 
-import { Container, SearchResults, PageControls } from './styles';
+import {
+  Container,
+  SearchResults,
+  ButtonContent,
+  PaginationButtonNext,
+  PaginationButton,
+} from './styles';
 
 const List: React.FC = () => {
   const { moviesOrSeries, page, handlePage, totalPages } = useData();
@@ -15,11 +21,10 @@ const List: React.FC = () => {
         {!!moviesOrSeries.data.totalResults && (
           <h1>
             Sua busca resultou em: ({' '}
-            <strong>{moviesOrSeries.data.totalResults}</strong>resultados)
+            <strong>{moviesOrSeries.data.totalResults}</strong> resultados)
           </h1>
         )}
       </SearchResults>
-
       <Container>
         {moviesOrSeries.error ? (
           <p>{moviesOrSeries.error}</p>
@@ -30,15 +35,20 @@ const List: React.FC = () => {
             </Link>
           ))
         )}
-        <PageControls>
+      </Container>
+      <ButtonContent>
+        <PaginationButton>
           {page > 1 && (
             <Button onClick={() => handlePage('-')}>anterior</Button>
           )}
+        </PaginationButton>
+
+        <PaginationButtonNext>
           {moviesOrSeries.data.items.length !== 0 && page !== totalPages && (
             <Button onClick={() => handlePage('+')}>próximo</Button>
           )}
-        </PageControls>
-      </Container>
+        </PaginationButtonNext>
+      </ButtonContent>
     </>
   );
 };
