@@ -6,7 +6,7 @@ import { Title, Container } from './styles';
 const Home: React.FC = () => {
   return (
     <Container>
-      <Title>Encontre seu filme ou série favorita</Title>
+      <Title />
       <Search />
       <List />
     </Container>

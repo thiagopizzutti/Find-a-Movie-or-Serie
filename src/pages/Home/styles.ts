@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const Title = styled.h1`
   font-size: 45px;
   font-weight: bold;
-  color: #00bfff;
+  color: #404552;
   line-height: 56px;
   margin-top: 80px;
 `;

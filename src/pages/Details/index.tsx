@@ -3,14 +3,14 @@ import { Link, useParams } from 'react-router-dom';
 import { BounceLoader } from 'react-spinners';
 import { Button } from '../../components';
 import { useData } from '../../hooks/useData';
-import { Container } from './styles';
+import { Title, Content, Container, StyledButton } from './styles';
 
 interface RouteParams {
   id: string;
 }
 
 const Details: React.FC = () => {
-  const { selectedItem, handleSelectedItem } = useData();
+  const { selectedItem, handleSelectedItem, handleBrokenImg } = useData();
 
   const { id } = useParams() as RouteParams;
 
@@ -24,29 +24,47 @@ const Details: React.FC = () => {
   return (
     <Container>
       {selectedItem.error ? (
-        <p>{selectedItem.error}</p>
+        <p>
+          {selectedItem.error}
+          <Link to="/">
+            <Button>Voltar para página de busca</Button>
+          </Link>
+        </p>
       ) : (
         <>
-          <h1>{selectedItem.data.Title}</h1>
-          <img src={selectedItem.data.Poster} alt="" />
-          <p>
-            <strong>Ano: </strong>
-            {selectedItem.data.Year}
-          </p>
-          <p>
-            <strong>Diretor(a): </strong>
-            {selectedItem.data.Director}
-          </p>
-          <p>
-            <strong>Atrizes/Atores: </strong>
+          <Title>{selectedItem.data.Title}</Title>
 
-            {selectedItem.data.Actors}
-          </p>
+          <img
+            src={selectedItem.data.Poster}
+            alt="Poster"
+            onError={handleBrokenImg}
+          />
+          <Content>
+            <p>
+              <strong>Ano: </strong>
+              {selectedItem.data.Year}
+            </p>
+            <p>
+              <strong>Diretor(a): </strong>
+              {selectedItem.data.Director}
+            </p>
+            <p>
+              <strong>Atrizes/Atores: </strong>
+
+              {selectedItem.data.Actors}
+            </p>
+            <p>
+              <strong>Info: </strong>
+              {selectedItem.data.Plot}
+            </p>
+          </Content>
+          <StyledButton>
+            <Link to="/">
+              <Button>Voltar</Button>
+            </Link>
+          </StyledButton>
         </>
       )}
-      <Link to="/">
-        <Button>Voltar</Button>
-      </Link>
     </Container>
   );
 };
