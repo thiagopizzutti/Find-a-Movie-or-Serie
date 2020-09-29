@@ -13,7 +13,7 @@ import { Input, Button, SelectableButton } from '..';
 import { useData } from '../../hooks/useData';
 
 const Search: React.FC = () => {
-  const { moviesOrSeries, handleMoviesOrSeries } = useData();
+  const { moviesOrSeries, handleFormData } = useData();
 
   const {
     handleChange,
@@ -28,7 +28,7 @@ const Search: React.FC = () => {
       type: '',
       title: '',
     },
-    onSubmit: handleMoviesOrSeries,
+    onSubmit: handleFormData,
     validationSchema: yup.object().shape({
       title: yup.string().required('Preencha com o nome do filme ou série'),
     }),
