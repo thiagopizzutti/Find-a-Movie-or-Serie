@@ -39,7 +39,6 @@ export const Content = styled.div`
 p{
   margin-bottom: 18px;
   color: #404552
-
 }
 
 }
