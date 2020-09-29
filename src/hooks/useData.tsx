@@ -112,7 +112,7 @@ const DataContextProvider: React.FC = ({ children }) => {
     } catch (error) {
       setMoviesOrSeries(prevState => ({
         ...prevState,
-        error: 'Falha para obter os dados solicitados',
+        error: 'Oops, algo está não está certo. Tente novamente.',
       }));
     } finally {
       setMoviesOrSeries(prevState => ({
@@ -156,7 +156,7 @@ const DataContextProvider: React.FC = ({ children }) => {
     } catch (error) {
       setSelectedItem(prevState => ({
         ...prevState,
-        error: 'Falha para obter os dados solicitados',
+        error: 'Oops, algo está não está certo. Tente novamente.',
       }));
     } finally {
       setSelectedItem(prevState => ({
@@ -176,7 +176,6 @@ const DataContextProvider: React.FC = ({ children }) => {
   }, []);
 
   const handleBrokenImg = (event: SyntheticEvent<HTMLImageElement, Event>) => {
-    // eslint-disable-next-line no-param-reassign
     event.currentTarget.src = filmPoster;
   };
 
