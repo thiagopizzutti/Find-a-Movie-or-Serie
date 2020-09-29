@@ -1,5 +1,13 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  SyntheticEvent,
+} from 'react';
 import { api } from '../services/api';
+import filmPoster from '../assets/film-poster.png';
 
 const INITIAL_MOVIES_OR_SERIES_STATE = {
   data: {
@@ -15,10 +23,14 @@ const INITIAL_SELECTED_ITEM_STATE = {
   error: '',
 };
 interface IDataContext {
-  handleMoviesOrSeries: (formPayload: IFormPayload) => Promise<void>;
   moviesOrSeries: typeof INITIAL_MOVIES_OR_SERIES_STATE;
   selectedItem: typeof INITIAL_SELECTED_ITEM_STATE;
+  page: number;
   handleSelectedItem: (id: string) => Promise<void>;
+  handleFormData: (formPayload: IFormPayload) => void;
+  handlePage: (str: string) => Promise<void>;
+  handleBrokenImg: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+  totalPages: number;
 }
 interface IFormPayload {
   title: string;
@@ -32,6 +44,7 @@ interface IMoviesOrSeries {
   Actors: string;
   Director: string;
   imdbID: string;
+  Plot: string;
 }
 
 const DataContext = createContext({} as IDataContext);
@@ -42,7 +55,23 @@ const DataContextProvider: React.FC = ({ children }) => {
   );
   const [selectedItem, setSelectedItem] = useState(INITIAL_SELECTED_ITEM_STATE);
 
-  const handleMoviesOrSeries = useCallback(async ({ title, type }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    type: '',
+  });
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handleFormData = useCallback(({ type, title }: IFormPayload) => {
+    setFormData({
+      type,
+      title,
+    });
+    setPage(1);
+  }, []);
+
+  const handleMoviesOrSeries = useCallback(async () => {
     setMoviesOrSeries(prevState => ({
       ...prevState,
       error: '',
@@ -56,8 +85,9 @@ const DataContextProvider: React.FC = ({ children }) => {
     try {
       const response = await api.get('', {
         params: {
-          s: title,
-          type,
+          s: formData.title,
+          type: formData.type,
+          page,
         },
       });
 
@@ -69,6 +99,9 @@ const DataContextProvider: React.FC = ({ children }) => {
 
         return;
       }
+
+      setTotalPages(Math.floor(Number(response.data.totalResults) / 10));
+
       setMoviesOrSeries(prevState => ({
         ...prevState,
         data: {
@@ -87,7 +120,13 @@ const DataContextProvider: React.FC = ({ children }) => {
         loading: false,
       }));
     }
-  }, []);
+  }, [page, formData.title, formData.type]);
+
+  useEffect(() => {
+    if (formData.title) {
+      handleMoviesOrSeries();
+    }
+  }, [page, formData, handleMoviesOrSeries]);
 
   const handleSelectedItem = useCallback(async (id: string) => {
     setSelectedItem(prevState => ({
@@ -127,13 +166,31 @@ const DataContextProvider: React.FC = ({ children }) => {
     }
   }, []);
 
+  const handlePage = useCallback(async str => {
+    if (str === '+') {
+      setPage(prevPage => prevPage + 1);
+      return;
+    }
+    setPage(prevPage => prevPage - 1);
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBrokenImg = (event: SyntheticEvent<HTMLImageElement, Event>) => {
+    // eslint-disable-next-line no-param-reassign
+    event.currentTarget.src = filmPoster;
+  };
+
   return (
     <DataContext.Provider
       value={{
-        handleMoviesOrSeries,
+        handleFormData,
+        handleSelectedItem,
+        handlePage,
+        handleBrokenImg,
         moviesOrSeries,
         selectedItem,
-        handleSelectedItem,
+        page,
+        totalPages,
       }}
     >
       {children}
