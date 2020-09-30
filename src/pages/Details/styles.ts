@@ -51,3 +51,10 @@ export const StyledButton = styled.div`
   flex-direction: column;
   align-content: flex-start;
 `;
+
+export const StyledLoader = styled.h1`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+`;

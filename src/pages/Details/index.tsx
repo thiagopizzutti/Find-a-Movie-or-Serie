@@ -3,7 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import { BounceLoader } from 'react-spinners';
 import { Button } from '../../components';
 import { useData } from '../../hooks/useData';
-import { Title, Content, Container, StyledButton } from './styles';
+import {
+  Title,
+  Content,
+  Container,
+  StyledButton,
+  StyledLoader,
+} from './styles';
 
 interface RouteParams {
   id: string;
@@ -19,7 +25,11 @@ const Details: React.FC = () => {
   }, [handleSelectedItem, id]);
 
   if (selectedItem.loading) {
-    return <BounceLoader size={60} color="#45aaf2" />;
+    return (
+      <StyledLoader>
+        <BounceLoader size={60} color="#45aaf2" />
+      </StyledLoader>
+    );
   }
   return (
     <Container>
