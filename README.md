@@ -1,6 +1,6 @@
 # Desafio Refinaria de Dados
 
-![Desafio Refinaria de Dados ](/public/aplication.png)
+![Desafio Refinaria de Dados ](/public/application.png)
 
 ## About The Project
 
