@@ -1,44 +1,69 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Desafio Refinaria de Dados
 
-## Available Scripts
+![Desafio Refinaria de Dados ](/public/aplication.png)
 
-In the project directory, you can run:
+## About The Project
 
-### `yarn start`
+The challenge was to build a system for searching movies or series. The site is responsive. This is the front end of the application.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Built With:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [Typescript](https://www.typescriptlang.org/) - TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+- [ReactJS](https://pt-br.reactjs.org/) - Uma biblioteca JavaScript para criar interfaces de usuário.
+- [Styled Components](https://styled-components.com/) - Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress.
 
-### `yarn test`
+<!-- USAGE EXAMPLES -->
+## Usage
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The project is deployed and can be accessed at https://myfinder.vercel.app/
 
-### `yarn build`
+<!-- GETTING STARTED -->
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<!-- PLACEHOLDER FOR PROJECT OVERVIEW -->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
 
-### `yarn eject`
+In order to run this project locally you will need to:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Clone and install this repository - https://github.com/thiagopizzutti/Find-a-Movie-or-Serie
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Clone the repo
 
-## Learn More
+```sh
+git clone https://github.com/thiagopizzutti/Find-a-Movie-or-Serie
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Install YARN packages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+yarn install
+```
+
+3. Run the app
+
+```sh
+yarn start
+```
+
+4. Make sure the following port is available:
+
+```sh
+PORTS: 3000
+```
+
+5. Access the application through the following link afer doing the steps 1 - 4.
+
+```sh
+http://localhost:3000/
+```
+https://www.linkedin.com/in/tpizzutti/
+<!-- CONTACT -->
+
+## Contact
+
+Thiago Pizzutti - [email](mailto:tpizzutti@gmail.com) - [linkedin](https://www.linkedin.com/in/tpizzutti/)
