@@ -112,7 +112,7 @@ const DataContextProvider: React.FC = ({ children }) => {
     } catch (error) {
       setMoviesOrSeries(prevState => ({
         ...prevState,
-        error: 'Oops, algo está não está certo. Tente novamente.',
+        error: 'Oops!! Algo não está certo. Tente novamente.',
       }));
     } finally {
       setMoviesOrSeries(prevState => ({
@@ -156,7 +156,7 @@ const DataContextProvider: React.FC = ({ children }) => {
     } catch (error) {
       setSelectedItem(prevState => ({
         ...prevState,
-        error: 'Oops, algo está não está certo. Tente novamente.',
+        error: 'Oops!! Algo não está certo. Tente novamente.',
       }));
     } finally {
       setSelectedItem(prevState => ({
