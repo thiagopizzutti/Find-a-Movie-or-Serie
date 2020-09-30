@@ -18,6 +18,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 30px;
   }
 `;
 
@@ -34,14 +35,13 @@ export const Content = styled.div`
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  align-content: flex-start;
 
-p{
-  margin-bottom: 18px;
-  color: #404552
-}
+  margin-left: 50px;
 
-}
+  p {
+    margin-bottom: 18px;
+    color: #404552;
+  }
 `;
 
 export const StyledButton = styled.div`
@@ -56,5 +56,5 @@ export const StyledLoader = styled.h1`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 100px;
 `;
