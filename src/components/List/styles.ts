@@ -29,22 +29,48 @@ export const SearchResults = styled.div`
   margin-bottom: 30px;
 `;
 export const ButtonContent = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  button {
-    width: 360px;
-  }
-`;
-export const PaginationButton = styled.div`
-  margin-top: -30px;
-  margin-right: 20px;
-`;
-
-export const PaginationButtonNext = styled.div`
-  width: 100%;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
-  margin-top: -30px;
+  align-content: center;
+  margin-right: 30px;
+
+  @media (max-width: 1550px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    button {
+      margin-left: 30px;
+      width: 500px;
+    }
+  }
+  @media (max-width: 1121px) {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    button {
+      margin-left: 30px;
+      width: 700px;
+    }
+  }
+  @media (max-width: 760px) {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    button {
+      margin-left: 30px;
+      width: 500px;
+    }
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    button {
+      margin-left: 30px;
+      width: 320px;
+    }
+  }
 `;
+export const PaginationButton = styled.div``;
+
+export const PaginationButtonNext = styled.div``;
